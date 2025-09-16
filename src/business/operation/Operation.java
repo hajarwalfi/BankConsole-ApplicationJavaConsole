@@ -27,6 +27,7 @@ public abstract class Operation {
         return amount;
     }
 
+    @Override
     public String toString(){
         return "Operation{" +
                 "id='" + id + '\'' +

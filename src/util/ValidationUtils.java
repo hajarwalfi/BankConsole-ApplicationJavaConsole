@@ -6,4 +6,9 @@ public class ValidationUtils {
             throw new IllegalArgumentException("le montant doit etre positif!");
         }
     }
+    public static void validateNotEmpty(String value, String fieldName){
+        if(value == null || value.trim().isEmpty()){
+            throw new IllegalArgumentException(fieldName + "cannot be empty");
+        }
+    }
 }
