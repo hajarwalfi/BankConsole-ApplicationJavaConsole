@@ -11,4 +11,7 @@ public class ValidationUtils {
             throw new IllegalArgumentException(fieldName + "cannot be empty");
         }
     }
+    public static void validateAccountCode(String code){
+        // write the code
+    }
 }
