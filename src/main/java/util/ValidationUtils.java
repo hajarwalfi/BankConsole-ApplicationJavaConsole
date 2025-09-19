@@ -1,7 +1,6 @@
 package util;
 
-import business.account.Account;
-import java.util.List;
+
 
 public class ValidationUtils {
 
@@ -21,15 +20,6 @@ public class ValidationUtils {
         if(!code.matches("^CPT-\\d{5}$")){
             throw new IllegalArgumentException("Le code de compte doit respecter le format CPT-XXXXX (où X = chiffre)."
             );
-        }
-    }
-
-    public static void validateAccountNotExists(List<Account> accounts, String code) {
-        for (Account acc : accounts) {
-            if (acc.getCode().equals(code)) {
-                throw new IllegalArgumentException("Un compte avec ce code existe déjà: " + code
-                );
-            }
         }
     }
 

@@ -66,8 +66,6 @@ public class Menu {
         System.out.println("0. Quitter");
     }
 
-    // ===== Menu Actions =====
-
     private void createAccount() {
         System.out.println("\nType de compte:");
         System.out.println("1. Compte Courant");

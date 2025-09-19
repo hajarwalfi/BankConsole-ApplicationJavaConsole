@@ -61,6 +61,6 @@ public class BankService {
     }
 
     public List<Account> getAllAccounts() {
-        return new ArrayList<>(accounts); // retourne une copie pour protéger la liste interne
+        return new ArrayList<>(accounts);
     }
 }
