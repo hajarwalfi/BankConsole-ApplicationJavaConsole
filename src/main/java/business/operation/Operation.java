@@ -5,11 +5,9 @@ import java.util.UUID;
 import util.ValidationUtils;
 
 public abstract class Operation {
-    //final because the property shouldn't be reassigned after initializing, once it's set it cannot be changed
-    //private because I don't want children modifying these directly
-    private final String id;
-    private final LocalDate date;
-    private final double amount;
+    protected final String id;
+    protected LocalDate date;
+    protected double amount;
 
     protected Operation(double amount){
         ValidationUtils.validatePositiveAmount(amount);
