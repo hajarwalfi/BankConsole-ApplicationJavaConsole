@@ -17,4 +17,8 @@ public class Withdrawal extends Operation  {
     public String toString(){
         return super.toString()+ ", destination='"+destination+"'";
     }
+    @Override
+    public String getDetails() {
+        return "Retrait de " + getAmount() + " MAD, Destination: " + destination + ", Date: " + getDate();
+    }
 }

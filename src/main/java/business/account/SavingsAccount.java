@@ -2,12 +2,13 @@ package business.account;
 
 import business.operation.*;
 import util.ValidationUtils;
+import java.util.List;
 
-public class SavingsAccount extends Account{
+public class SavingsAccount extends Account {
     private final double interestRate;
 
-    public SavingsAccount(String code, double initialBalance,double interestRate){
-        super( code,initialBalance);
+    public SavingsAccount(double initialBalance, double interestRate){
+        super(initialBalance);
         ValidationUtils.validatePositiveAmount(interestRate);
         this.interestRate = interestRate;
     }
@@ -25,31 +26,30 @@ public class SavingsAccount extends Account{
             Withdrawal withdrawal = new Withdrawal(amount, destination);
             this.balance -= amount;
             this.listOperation.add(withdrawal);
-        }else{
+        } else {
             throw new IllegalArgumentException("Retrait refusé: solde insuffisant");
         }
-
-
     }
 
     @Override
     public double calculateInterest(){
-        return balance*(interestRate/100.0);
+        return balance * (interestRate / 100.0);
     }
 
     @Override
     public String displayDetails(){
         StringBuilder details = new StringBuilder();
         details.append("Compte Epargne\n");
-        details.append("Code:").append(this.code).append("\n");
-        details.append("Solde:").append(this.balance).append("Mad\n");
-        details.append("Taux d'interet: ").append(this.interestRate).append("%\n");
-        details.append("Interet calculé: ").append(calculateInterest()).append(" MAD\n");
-        details.append("Nombre d'opérations:").append(this.listOperation.size()).append("\n");
-        if (!this.listOperation.isEmpty()){
-            details.append("\n Dernieres opérations\n");
-            for(Operation op:this.listOperation){
-                details.append(op.toString()).append("\n");
+        details.append("Code: ").append(this.code).append("\n");
+        details.append("Solde: ").append(this.balance).append(" MAD\n");
+        details.append("Taux d'intérêt: ").append(this.interestRate).append("%\n");
+        details.append("Intérêt calculé: ").append(calculateInterest()).append(" MAD\n");
+        details.append("Nombre d'opérations: ").append(this.listOperation.size()).append("\n");
+        if(!this.listOperation.isEmpty()){
+            details.append("\nOpérations :\n");
+            int i = 1;
+            for(Operation op : this.listOperation){
+                details.append(i++).append(". ").append(op.getDetails()).append("\n");
             }
         }
         return details.toString();

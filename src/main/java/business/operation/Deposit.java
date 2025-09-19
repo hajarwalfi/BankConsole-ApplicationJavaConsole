@@ -16,4 +16,8 @@ public class Deposit extends Operation {
     public String toString(){
         return super.toString()+", source='"+source +"'";
     }
+    @Override
+    public String getDetails() {
+        return "Versement de " + getAmount() + " MAD, Source: " + source + ", Date: " + getDate();
+    }
 }

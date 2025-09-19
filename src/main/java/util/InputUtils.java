@@ -24,7 +24,7 @@ public class InputUtils {
             scanner.next();
         }
         double value = scanner.nextDouble();
-        scanner.nextLine(); // consume leftover newline
+        scanner.nextLine();
         return value;
     }
 

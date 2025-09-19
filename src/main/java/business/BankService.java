@@ -2,52 +2,54 @@ package business;
 
 import business.account.*;
 import util.ValidationUtils;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BankService {
-    private final Map<String, Account> accounts;
+    private final List<Account> accounts;
 
     public BankService() {
-        this.accounts = new HashMap<>();
+        this.accounts = new ArrayList<>();
     }
 
-    public CheckingAccount createCheckingAccount(String code, double initialBalance, double overdraft) {
-        ValidationUtils.validateAccountCode(code);
-        ValidationUtils.validateAccountNotExists(accounts, code);
-        CheckingAccount account = new CheckingAccount(code, initialBalance, overdraft);
-        accounts.put(code, account);
+    public CheckingAccount createCheckingAccount(double initialBalance, double overdraft) {
+        CheckingAccount account = new CheckingAccount(initialBalance, overdraft);
+        accounts.add(account);
         return account;
     }
 
-    public SavingsAccount createSavingsAccount(String code, double initialBalance, double interestRate) {
-        ValidationUtils.validateAccountCode(code);
-        ValidationUtils.validateAccountNotExists(accounts, code);
-        SavingsAccount account = new SavingsAccount(code, initialBalance, interestRate);
-        accounts.put(code, account);
+    public SavingsAccount createSavingsAccount(double initialBalance, double interestRate) {
+        SavingsAccount account = new SavingsAccount(initialBalance, interestRate);
+        accounts.add(account);
         return account;
     }
 
     public Account getAccount(String code){
         ValidationUtils.validateAccountCode(code);
-        return ValidationUtils.validateAccountExists(accounts, code);
+        for (Account acc : accounts) {
+            if (acc.getCode().equals(code)) {
+                return acc;
+            }
+        }
+        throw new IllegalArgumentException("Aucun compte trouvé avec le code: " + code);
     }
 
-    public void deposit(String accountCode,double amount, String source){
+    public void deposit(String accountCode, double amount, String source){
         Account account = getAccount(accountCode);
-        account.deposit(amount,source);
+        account.deposit(amount, source);
     }
 
-    public void withdraw(String accountCode,double amount,String destination){
-        Account account= getAccount(accountCode);
-        account.withdraw(amount,destination);
+    public void withdraw(String accountCode, double amount, String destination){
+        Account account = getAccount(accountCode);
+        account.withdraw(amount, destination);
     }
 
-    public void transfer(String fromAccountCode,String toAccountCode,double amount){
+    public void transfer(String fromAccountCode, String toAccountCode, double amount){
         ValidationUtils.validateDifferentAccounts(fromAccountCode, toAccountCode);
-        Account fromAccount=getAccount(fromAccountCode);
-        Account toAccount=getAccount(toAccountCode);
-        fromAccount.withdraw(amount,"Virement vers "+ toAccountCode);
-        toAccount.deposit(amount,"Virement de "+fromAccountCode);
+        Account fromAccount = getAccount(fromAccountCode);
+        Account toAccount = getAccount(toAccountCode);
+        fromAccount.withdraw(amount, "Virement vers " + toAccountCode);
+        toAccount.deposit(amount, "Virement de " + fromAccountCode);
     }
 
     public double getBalance(String accountCode){
@@ -59,7 +61,6 @@ public class BankService {
     }
 
     public List<Account> getAllAccounts() {
-        return new ArrayList<>(accounts.values());
+        return new ArrayList<>(accounts); // retourne une copie pour protéger la liste interne
     }
 }
-

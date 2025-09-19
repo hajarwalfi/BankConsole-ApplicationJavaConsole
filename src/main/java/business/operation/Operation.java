@@ -35,5 +35,6 @@ public abstract class Operation {
                 ", amount=" + amount +
                 '}';
     }
+    public abstract String getDetails();
 
 }

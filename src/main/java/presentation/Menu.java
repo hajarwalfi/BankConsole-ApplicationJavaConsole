@@ -1,6 +1,7 @@
 package presentation;
 
 import business.BankService;
+import business.account.*;
 import util.InputUtils;
 
 import java.util.Scanner;
@@ -11,7 +12,7 @@ public class Menu {
 
     public Menu() {
         this.scanner = new Scanner(System.in);
-        this.bankService = new BankService(); // Service de gestion des comptes
+        this.bankService = new BankService();
     }
 
     public void start() {
@@ -73,17 +74,16 @@ public class Menu {
         System.out.println("2. Compte Épargne");
         int type = InputUtils.readInt(scanner,"Votre choix: ");
 
-        String code = InputUtils.readString(scanner,"Entrez le code du compte (format CPT-XXXXX): ");
         double initialBalance = InputUtils.readDouble(scanner,"Solde initial: ");
 
         if (type == 1) {
             double overdraft = InputUtils.readDouble(scanner,"Découvert autorisé: ");
-            bankService.createCheckingAccount(code, initialBalance, overdraft);
-            System.out.println("Compte courant créé avec succès!");
+            CheckingAccount account = bankService.createCheckingAccount(initialBalance, overdraft);
+            System.out.println("Compte courant "+ account.getCode() +" créé avec succès!");
         } else if (type == 2) {
             double interestRate = InputUtils.readDouble(scanner,"Taux d'intérêt (%): ");
-            bankService.createSavingsAccount(code, initialBalance, interestRate);
-            System.out.println("Compte épargne créé avec succès!");
+            SavingsAccount account =bankService.createSavingsAccount(initialBalance, interestRate);
+            System.out.println("Compte épargne"+ account.getCode() +" créé avec succès!");
         } else {
             System.out.println("Type de compte invalide.");
         }
